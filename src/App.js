@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import Routes from './routes';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setVal } from './store/action';
+import axios from "axios";
+import reduxSetup from "./requests/reduxSetup";
+import Navbar from './components/Navbar/index';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { Lang } from './lang';
 
-function App() {
+function App({ store, _setVal }) {
+  i18n.use(initReactI18next)
+    .init({
+      resources: Lang,
+      lng: store?.lang,
+      fallbackLng: store?.lang,
+      interpolation: {
+        escapeValue: false
+      }
+    })
+  reduxSetup(axios, store?._token, store?.lang, _setVal)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        {store?.user && <Navbar lang={store?.lang} user={store?.user} _setVal={_setVal} />}
+        <div className="page_content">
+          <Routes store={store} _setVal={_setVal} />
+        </div>
+      </Router>
     </div>
   );
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    store: state.user,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    _setVal: (type, value) => { dispatch(setVal(type, value)); },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);

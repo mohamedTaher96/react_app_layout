@@ -1,0 +1,12 @@
+.imgStyle {
+    width: 50px;
+  }
+  .text_hover{
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #8f8f8f;
+  }
+  .text_hover:hover{
+      color: #14bdee;
+  }
