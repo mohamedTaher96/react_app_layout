@@ -85,3 +85,9 @@
     padding: 20px 50px;
   }
 }
+
+@media only screen and (min-width: 980px) and (max-width: 1200px) {
+  .divSty span {
+    font-size: 16px !important;
+  }
+}
