@@ -5,10 +5,10 @@ import { MainRoutes, AuthRoutes } from "./routes";
 import LogoLoader from "../components/Loader/LogoLoader";
 
 const Routes = ({ store, _setVal }) => {
-  const RoutesItems = store?.user ? MainRoutes : AuthRoutes;
+  const RoutesItems = store?.user ? MainRoutes : MainRoutes;
   return (
     <Switch>
-      {map(RoutesItems, (route, key) => {
+      {map(MainRoutes, (route, key) => {
         return (
           <Route
             key={key}

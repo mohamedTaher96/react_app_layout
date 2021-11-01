@@ -1,0 +1,91 @@
+.imgSt {
+  width: 100%;
+  height: 100vh;
+}
+.logoSt {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.headTxt {
+  font-family: "NeusaNextPro" !important;
+  font-size: 40px;
+  color: #012547;
+}
+.secTxt span {
+  font-family: "IBM Plex Sans";
+  font-size: 18px;
+  color: #012547;
+}
+
+.labelSt {
+  font-family: "IBM Plex Sans";
+  font-size: 16px;
+}
+.inputSt {
+  display: block;
+  width: 100%;
+  height: 45px;
+  border: none;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 3px;
+  font-family: "IBM Plex Sans";
+  padding-left: 10px;
+}
+.inputSt:focus {
+  outline: none;
+}
+.btnSt {
+  background-color: #bcbbbc;
+  color: #fff;
+  font-family: "IBM Plex Sans";
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
+.btnSt:hover {
+  background-color: #012547;
+  color: #fff;
+}
+.termsPolicy {
+  text-align: center;
+  margin-top: 10px;
+  color: #455054;
+  font-family: "IBM Plex Sans";
+}
+.underLine {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.rotateSvg svg {
+  transform: rotate(90deg);
+  cursor: pointer;
+  width: 20px;
+}
+@media only screen and (min-width: 768px) {
+  .headTxt {
+    font-size: 20px;
+  }
+}
+@media only screen and (min-width: 975px) {
+  .secTxt span {
+    font-size: 12px;
+  }
+  .headTxt {
+    font-size: 25px;
+  }
+  .labelSt {
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .secTxt span {
+    font-size: 16px;
+  }
+  .headTxt {
+    font-size: 45px;
+  }
+  .labelSt {
+    font-size: 16px;
+  }
+}
