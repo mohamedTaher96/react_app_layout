@@ -1,25 +1,26 @@
 import SignIn from "../views/auth/signin";
 import SignUp from "../views/auth/signup";
 import Home from "../views/home/index";
-import AddCompany from "../views/New/AddCompany";
+import { AddNewCompany } from "../views/New/AddNewCompany";
 import Company from "../views/New/Company";
 import CompanyCats from "../views/New/CompanyCats";
-import Configure from "../views/New/Configure";
 
 export const MainRoutes = [
+  // {
+  //   path: "/",
+  //   component: Home,
+  //   exact: true,
+  // },
   {
     path: "/",
-    component: Home,
+    component: SignUp,
     exact: true,
   },
   {
-    path: "/addcompany",
-    component: AddCompany,
+    path: "/login",
+    component: SignIn,
   },
-  {
-    path: "/configure",
-    component: Configure,
-  },
+
   {
     path: "/companies",
     component: Company,
@@ -28,15 +29,19 @@ export const MainRoutes = [
     path: "/companycategories",
     component: CompanyCats,
   },
+  {
+    path: "/addnewcompany",
+    component: AddNewCompany,
+  },
 ];
 
 export const AuthRoutes = [
-  {
-    path: "/signin",
-    component: SignIn,
-  },
-  {
-    path: "/signup",
-    component: SignUp,
-  },
+  // {
+  //   path: "/login",
+  //   component: SignIn,
+  // },
+  // {
+  //   path: "/signup",
+  //   component: SignUp,
+  // },
 ];

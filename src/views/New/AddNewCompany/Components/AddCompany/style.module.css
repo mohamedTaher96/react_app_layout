@@ -14,7 +14,7 @@
 }
 .secTxt span {
   font-family: "IBM Plex Sans";
-  font-size: 18px;
+  font-size: 12px;
   color: #012547;
 }
 
@@ -62,22 +62,40 @@
   cursor: pointer;
   width: 20px;
 }
-@media only screen and (min-width: 768px) {
-  .headTxt {
-    font-size: 20px;
-  }
+.backBtn {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0px;
 }
-@media only screen and (min-width: 975px) {
+.errorSt {
+  font-size: 12px !important;
+  color: rgb(220, 53, 69);
+}
+.secPadd {
+  padding: 40px 0;
+}
+@media only screen and (min-width: 992px) {
   .secTxt span {
-    font-size: 12px;
+    font-size: 10px;
   }
   .headTxt {
     font-size: 25px;
   }
   .labelSt {
-    font-size: 12px;
+    font-size: 10px;
+  }
+  .inputSt {
+    height: 35px;
+  }
+  .backBtn {
+    top: -10px;
+  }
+  .secPadd {
+    padding: 0;
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .secTxt span {
     font-size: 16px;
@@ -86,6 +104,16 @@
     font-size: 45px;
   }
   .labelSt {
-    font-size: 16px;
+    font-size: 14px;
+  }
+  .inputSt {
+    height: 45px;
+  }
+  .errorSt {
+    font-size: 14px !important;
+    color: rgb(220, 53, 69);
+  }
+  .backBtn {
+    top: -30px;
   }
 }

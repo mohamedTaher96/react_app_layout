@@ -37,11 +37,13 @@ export default class Company extends Component {
               </Link>
             </div>
             <div className="col-lg-4  col-sm-6 mb-4">
-              <div className={Styles.divSty}>
-                <i className="fas fa-plus-circle"></i>
-                <span>Add Company</span>
-                <div>Add Company Description</div>
-              </div>
+              <Link to="/addnewcompany">
+                <div className={Styles.divSty}>
+                  <i className="fas fa-plus-circle"></i>
+                  <span>Add Company</span>
+                  <div>Add Company Description</div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

@@ -9,12 +9,12 @@
 }
 .headTxt {
   font-family: "NeusaNextPro" !important;
-  font-size: 40px;
+  font-size: 25px;
   color: #012547;
 }
 .secTxt span {
   font-family: "IBM Plex Sans";
-  font-size: 12px;
+  font-size: 18px;
   color: #012547;
 }
 
@@ -62,31 +62,41 @@
   cursor: pointer;
   width: 20px;
 }
+.secPadd {
+  padding: 40px 0;
+}
+@media only screen and (min-width: 768px) {
+  .headTxt {
+    font-size: 20px;
+  }
+}
 @media only screen and (min-width: 992px) {
   .secTxt span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .headTxt {
     font-size: 25px;
   }
   .labelSt {
-    font-size: 10px;
+    font-size: 12px;
   }
-  .inputSt {
-    height: 35px;
+  .secPadd {
+    padding: 0;
   }
 }
-/* .inputSt {
-  height: 45px;
-} */
 @media only screen and (min-width: 1200px) {
   .secTxt span {
     font-size: 16px;
   }
   .headTxt {
-    font-size: 45px;
+    font-size: 35px;
   }
   .labelSt {
-    font-size: 14px;
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 1500px) {
+  .headTxt {
+    font-size: 45px;
   }
 }
