@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 // console.log(window.socket)
 const INITIAL_STATE = {
   user: null,
+  schedule:null,
   _token:null,
   internet: true,
   loading:false,

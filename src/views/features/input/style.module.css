@@ -1,0 +1,32 @@
+.itemsBar
+{
+    border-radius: 10px;
+    width: 30%;
+    position: fixed;
+    z-index: 1;
+    top: 5vh;
+    height: 95vh;
+    overflow-y: auto;
+    right: -50%;
+    background-color: #fff;
+    text-align: center;
+    transition: all 500ms;
+    box-shadow: 0 0 0.5rem #9da5ab;
+}
+.showBar{
+    right: 5px;
+}
+.barItem{
+    width: fit-content;
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.groupItems{
+    font-weight: bolder;
+    font-size: 20px;
+    padding: 10px 0px;
+}

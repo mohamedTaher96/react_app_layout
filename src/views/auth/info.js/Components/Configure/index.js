@@ -9,12 +9,12 @@ import PropTypes from "prop-types";
 
 import Steps from "../Steps";
 import Styles from "./style.module.css";
+import { map } from "lodash";
 
 const validationSchema = yup.object({
-  firstName: yup.string().required("first name is required"),
-  lastName: yup.string().required("last name is required"),
+  first_name: yup.string().required("first name is required"),
+  last_name: yup.string().required("last name is required"),
   phone: yup.string().required(),
-  email: yup.string().required().email(),
 });
 
 export const Configure = ({ formData, setFormData, nextStep }) => {
@@ -39,14 +39,19 @@ export const Configure = ({ formData, setFormData, nextStep }) => {
               </h4>
             </div>
             <Formik
-              initialValues={formData}
+              initialValues={formData?.auth__user}
               onSubmit={(values) => {
-                setFormData(values);
+                const data={
+                  ...formData, 
+                  auth__user: values 
+                }
+                setFormData(data);
                 nextStep();
               }}
               validationSchema={validationSchema}
             >
-              {({ errors, touched }) => (
+              {({ errors, touched, values }) => (
+
                 <Form>
                   <div className="row">
                     <div className="col-lg-6">
@@ -56,11 +61,11 @@ export const Configure = ({ formData, setFormData, nextStep }) => {
                         </label>
                         <Field
                           type="text"
-                          name="firstName"
+                          name="first_name"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="firstName"
+                          name="first_name"
                           component="div"
                           className="text-danger"
                         />
@@ -73,11 +78,11 @@ export const Configure = ({ formData, setFormData, nextStep }) => {
                         </label>
                         <Field
                           type="text"
-                          name="lastName"
+                          name="last_name"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="lastName"
+                          name="last_name"
                           component="div"
                           className="text-danger"
                         />
@@ -95,21 +100,6 @@ export const Configure = ({ formData, setFormData, nextStep }) => {
                     />
                     <ErrorMessage
                       name="phone"
-                      component="div"
-                      className="text-danger"
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className={`${Styles.labelSt} form-label`}>
-                      Email
-                    </label>
-                    <Field
-                      type="email"
-                      name="email"
-                      className={Styles.inputSt}
-                    />
-                    <ErrorMessage
-                      name="email"
                       component="div"
                       className="text-danger"
                     />

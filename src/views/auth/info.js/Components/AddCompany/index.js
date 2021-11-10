@@ -10,15 +10,15 @@ import Styles from "./style.module.css";
 import Steps from "../Steps";
 
 const validationSchema = yup.object({
-  companyName: yup.string().required("Company name is required"),
-  registryNumber: yup.string().required("Registry number is required"),
+  name: yup.string().required("Company name is required"),
+  registry_number: yup.string().required("Registry number is required"),
   country: yup.string().required("Country is required"),
   city: yup.string().required("City is required"),
   industries: yup.string().required("Industries is required"),
-  financial: yup.string().required("Financial year-end is required"),
+  financial_end: yup.string().required("Financial year-end is required"),
   currency: yup.string().required("Currency is required"),
-  startDate: yup.string().required("Start date is required"),
-  taxRate: yup.string().required("Tax rate is required"),
+  start_date: yup.string().required("Start date is required"),
+  tax_rate: yup.string().required("Tax rate is required"),
 });
 
 export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
@@ -50,10 +50,13 @@ export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
             </div>
 
             <Formik
-              initialValues={formData}
+              initialValues={formData?.Product__company}
               onSubmit={(values) => {
-                alert(JSON.stringify(values, null, 2));
-                setFormData(values);
+                const data={
+                  ...formData, 
+                  Product__company: values 
+                }
+                setFormData(data);
                 direction === "back" ? prevStep() : nextStep();
               }}
               validationSchema={validationSchema}
@@ -68,11 +71,11 @@ export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
                         </label>
                         <Field
                           type="text"
-                          name="companyName"
+                          name="name"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="companyName"
+                          name="name"
                           component="div"
                           className={`${Styles.errorSt} `}
                         />
@@ -85,11 +88,11 @@ export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
                         </label>
                         <Field
                           type="text"
-                          name="registryNumber"
+                          name="registry_number"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="registryNumber"
+                          name="registry_number"
                           component="div"
                           className={`${Styles.errorSt} `}
                         />
@@ -153,11 +156,11 @@ export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
                         </label>
                         <Field
                           type="text"
-                          name="financial"
+                          name="financial_end"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="financial"
+                          name="financial_end"
                           component="div"
                           className={`${Styles.errorSt} `}
                         />
@@ -187,11 +190,11 @@ export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
                         </label>
                         <Field
                           type="date"
-                          name="startDate"
+                          name="start_date"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="startDate"
+                          name="start_date"
                           component="div"
                           className={`${Styles.errorSt} `}
                         />
@@ -204,11 +207,11 @@ export const AddCompany = ({ formData, setFormData, nextStep, prevStep }) => {
                         </label>
                         <Field
                           type="text"
-                          name="taxRate"
+                          name="tax_rate"
                           className={Styles.inputSt}
                         />
                         <ErrorMessage
-                          name="taxRate"
+                          name="tax_rate"
                           component="div"
                           className={`${Styles.errorSt} `}
                         />

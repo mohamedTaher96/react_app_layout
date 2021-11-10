@@ -8,6 +8,7 @@ import Navbar from './components/Navbar/index';
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { Lang } from './lang';
+import 'antd/dist/antd.css';
 
 function App({ store, _setVal }) {
   i18n.use(initReactI18next)

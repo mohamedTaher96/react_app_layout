@@ -1,47 +1,43 @@
 import SignIn from "../views/auth/signin";
 import SignUp from "../views/auth/signup";
 import Home from "../views/home/index";
-import { AddNewCompany } from "../views/New/AddNewCompany";
-import Company from "../views/New/Company";
-import CompanyCats from "../views/New/CompanyCats";
+import AuthInfo from "../views/auth/info.js";
+import Company from "../views/Company";
+import Dashboard from "../views/dashboard";
+import CompanyInput from "../views/features/input";
 
 export const MainRoutes = [
-  // {
-  //   path: "/",
-  //   component: Home,
-  //   exact: true,
-  // },
   {
     path: "/",
-    component: SignUp,
-    exact: true,
-  },
-  {
-    path: "/login",
-    component: SignIn,
-  },
-
-  {
-    path: "/companies",
     component: Company,
+    exact: true
   },
   {
-    path: "/companycategories",
-    component: CompanyCats,
+    path: "/company/input/:company",
+    component: CompanyInput,
   },
   {
-    path: "/addnewcompany",
-    component: AddNewCompany,
+    path: "/company/:company",
+    component: Dashboard,
+  },
+];
+
+export const AuthMainRoutes = [
+  {
+    path: "/login/info",
+    component: AuthInfo,
   },
 ];
 
 export const AuthRoutes = [
-  // {
-  //   path: "/login",
-  //   component: SignIn,
-  // },
-  // {
-  //   path: "/signup",
-  //   component: SignUp,
-  // },
+  {
+    path: "/signup",
+    component: SignUp,
+    exact: true,
+  },
+  {
+    path: "/signin",
+    component: SignIn,
+  },
+
 ];

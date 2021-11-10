@@ -1,194 +1,179 @@
-import React, { Component, Fragment } from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import Empty from "./helpers/empty";
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import "./style.css";
 
-import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import overlayFactory from "react-bootstrap-table2-overlay";
-import Styles from "./style.module.css";
-import InlineSVG from "react-inlinesvg";
-import { withTranslation } from "react-i18next";
-import Export from "./helpers/export";
+const EditableContext = React.createContext(null);
 
-const CTable = (props) => {
+const EditableRow = ({ index, ...props }) => {
+  const [form] = Form.useForm();
+  return (
+    <Form form={form} component={false}>
+      <EditableContext.Provider value={form}>
+        <tr {...props} />
+      </EditableContext.Provider>
+    </Form>
+  );
+};
 
-  const handelChek = () => {
-    alert("check all");
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
+  const [editing, setEditing] = useState(false);
+  const inputRef = useRef(null);
+  const form = useContext(EditableContext);
+  useEffect(() => {
+    if (editing) {
+      inputRef.current.focus();
+    }
+  }, [editing]);
+
+  const toggleEdit = () => {
+    setEditing(!editing);
+    form.setFieldsValue({
+      [dataIndex]: record[dataIndex],
+    });
   };
-  const onTableChange = (type, { sortField, sortOrder, data, page, sizePerPage }) => {
-    if (type === "sort") {
-      if (sortOrder === "asc") {
-        data.sort((a, b) => {
-          if (a[sortField]?.props?.children > b[sortField]?.props?.children) {
-            return 1;
-          } else if (b[sortField]?.props?.children > a[sortField]?.props?.children) {
-            return -1;
-          }
-          return 0;
-        });
-      } else {
-        data.sort((a, b) => {
-          if (a[sortField]?.props?.children > b[sortField]?.props?.children) {
-            return -1;
-          } else if (b[sortField]?.props?.children > a[sortField]?.props?.children) {
-            return 1;
-          }
-          return 0;
-        });
-      }
-    } else if (type === "pagination") {
-      props.handelPaginate(page, sizePerPage)
+
+  const save = async () => {
+    try {
+      const values = await form.validateFields();
+      toggleEdit();
+      handleSave({ ...record, ...values });
+    } catch (errInfo) {
+      console.log('Save failed:', errInfo);
     }
   };
-  const { t, coulms, rows, total, page, sizePerPage, tloading , result } = props
-  const customTotal = (from, to, size) => (
-    <span className="react-bootstrap-table-pagination-total">
-      &nbsp;{t("showing")} {from} - {to} {t("of")} {size} {t(result)}
-    </span>
-  );
 
-  const paginationOptions = {
-    paginationSize: sizePerPage,
-    pageStartIndex: page,
-    totalSize: total,
-    alwaysShowAllBtns: true, // Always show next and previous button
-    prePageText: <div>{t("prev")}</div>,
-    nextPageText: <div>{t("next")}</div>,
-    showTotal: true,
-    paginationTotalRenderer: customTotal,
-    disablePageTitle: true,
-    sizePerPageList: [
-      {
-        text: "10",
-        value: 10,
-      },
-      {
-        text: "20",
-        value: 20,
-      },
-      {
-        text: "50",
-        value: 50,
-      },
-      {
-        text: "100",
-        value: 100,
-      },
-    ],
+  let childNode = children;
+
+  if (editable) {
+    childNode = editing ? (
+      <Form.Item
+        style={{
+          margin: 0,
+        }}
+        name={dataIndex}
+        rules={[
+          {
+            required: true,
+            message: `the value is required.`,
+          },
+        ]}
+      >
+        <Input type="number" ref={inputRef} onPressEnter={save} onBlur={save} />
+      </Form.Item>
+    ) : (
+      <div
+        className="editable-cell-value-wrap"
+        style={{
+          paddingRight: 24,
+        }}
+        onClick={toggleEdit}
+      >
+        {children}
+      </div>
+    );
+  }
+
+  return <td {...restProps}>{childNode}</td>;
+};
+
+class EditableTable extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      dataSource: props?.dataSource,
+      columns: props?.columns
+    }
+  }
+  handleDelete = (key) => {
+    const dataSource = [...this.state.dataSource];
+    this.setState({
+      dataSource: dataSource.filter((item) => item.key !== key),
+    });
+  };
+  handleAdd = () => {
+    const { count, dataSource } = this.state;
+    const newData = {
+      key: count,
+      name: `Edward King ${count}`,
+      age: '32',
+      address: `London, Park Lane no. ${count}`,
+    };
+    this.setState({
+      dataSource: [...dataSource, newData],
+      count: count + 1,
+    });
+  };
+  handleSave = (row) => {
+    const newData = [...this.state.dataSource];
+
+    const index = newData.findIndex((item) => row.key === item.key);
+
+    const item = newData[index];
+    newData.splice(index, 1, { ...item, ...row });
+    this.setState({
+      dataSource: newData,
+    });
   };
 
-  return (
-    <Fragment>
-      <div
-        className={`${Styles.marginSt} card card-custom gutter-b container`}
-      >
-        <div className="card-body">
-          <div className="">
-            <h3 className="card-title align-items-start flex-column">
-              <span className="card-label font-weight-bolder text-dark"> {t("Courses")} </span>
-            </h3>
-            <div className=" d-flex align-items-center justify-content-between flex-wrap">
-              <div className="d-flex align-items-center justify-content-around mb-5">
-                <div className="input-icon">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder={t("Search...")}
-                    style={{ minWidth: "300px" }}
-                    value={props?.search}
-                    onChange={(e) => { props.handelSearch(e.target.value) }}
-                  />
-                  <span className="svg-icon svg-icon-2x">
-                    <InlineSVG src={`${process.env.REACT_APP_API_URl}/images/svg/Search.svg`} title="search" />
-                  </span>
-                </div>
-                <div
-                  href="/"
-                  className="btn btn-light-primary px-6 font-weight-bold mr-2 ml-2"
-                >
-                  {t("Search")}
-                </div>
-              </div>
-              <div className="">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="card-toolbar d-flex">
-                    {/* <Export t={t} /> */}
-                    <div>
-                      {props.newBtn}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  render() {
+    const components = {
+      body: {
+        row: EditableRow,
+        cell: EditableCell,
+      },
+    };
+    let { dataSource, columns } = this.state
+    columns = columns.map((col) => {
+      if (!col.editable) {
+        return col;
+      }
 
-        <BootstrapTable
-          wrapperClasses="table-responsive"
-          loading={tloading}
-          bordered={false}
-          classes="table table-head-custom table-vertical-center"
-          remote
-          keyField="id"
-          data={rows}
-          columns={coulms}
-          selectRow={{
-            mode: "checkbox",
-            clickToSelect: true,
-            hideSelectAll: false,
-            selectionHeaderRenderer: () => {
-              return (
-                <>
-                  <input type="checkbox" style={{ display: "none" }} />
-                  <label className="checkbox checkbox-single">
-                    <input
-                      type="checkbox"
-                      onChange={() => {
-                      }}
-                    />
-                    <span />
-                  </label>
-                </>
-              );
-            },
-            selectionRenderer: ({ rowIndex }) => {
-              return (
-                <>
-                  <input type="checkbox" style={{ display: "none" }} />
-                  <label className="checkbox checkbox-single">
-                    <input
-                      type="checkbox"
-                      onChange={() => {
-
-                      }}
-                    />
-                    <span />
-                  </label>
-                </>
-              );
-            },
+      return {
+        ...col,
+        onCell: (record) => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: this.handleSave,
+        }),
+      };
+    });
+    return (
+      <div>
+        {/* <Button
+          onClick={this.handleAdd}
+          type="primary"
+          style={{
+            marginBottom: 16,
           }}
-          noDataIndication={<Empty />}
-          overlay={overlayFactory({
-            spinner: false,
-            text: <div className={Styles.table_loader} ><div className="loading"></div></div>,
-            className: "overLay_table",
-            styles: {
-              overlay: (base) => ({
-                ...base,
-                justifyContent: "center",
-                background: "transparent",
-                cursor: "progress"
-              }),
-            },
-          })}
-          pagination={paginationFactory(paginationOptions)}
-          onTableChange={onTableChange}
-        ></BootstrapTable>
+        >
+          Add a row
+        </Button> */}
+        <Table
+          components={components}
+          rowClassName={() => 'editable-row'}
+          bordered
+          dataSource={dataSource}
+          columns={columns}
+          scroll={{
+            scrollToFirstRowOnChange:true,
+            x: true
+          }}
+          pagination={false}
+        />
       </div>
-    </Fragment>
-  );
+    );
+  }
 }
 
-export default withTranslation()(CTable)
+export default EditableTable

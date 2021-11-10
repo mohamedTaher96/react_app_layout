@@ -1,14 +1,14 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { map } from "lodash";
-import { MainRoutes, AuthRoutes } from "./routes";
+import { MainRoutes, AuthRoutes, AuthMainRoutes } from "./routes";
 import LogoLoader from "../components/Loader/LogoLoader";
 
 const Routes = ({ store, _setVal }) => {
-  const RoutesItems = store?.user ? MainRoutes : MainRoutes;
+  const RoutesItems = store?.user ? store?.user?.first_name ? MainRoutes : AuthMainRoutes : AuthRoutes;
   return (
     <Switch>
-      {map(MainRoutes, (route, key) => {
+      {map(RoutesItems, (route, key) => {
         return (
           <Route
             key={key}
@@ -25,7 +25,7 @@ const Routes = ({ store, _setVal }) => {
           />
         );
       })}
-      <Redirect to={store?.user ? "/" : "/signin"} />
+      <Redirect to={store?.user ? store?.user?.first_name ? "/" : "/login/info" : "/signin"} />
     </Switch>
   );
 };

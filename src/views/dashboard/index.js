@@ -1,29 +1,32 @@
 import React, { Component, Fragment } from "react";
-import Navbar from "../Navbar";
+// import Navbar from "../../components/Navbar";
 import SVG from "react-inlinesvg";
-import bg from "../../../images/svg/Ellipse 411.png";
-import icon1 from "../../../images/svg/download.svg";
-import icon2 from "../../../images/svg/ratio.svg";
-import icon3 from "../../../images/svg/data-analysis.svg";
-import icon4 from "../../../images/svg/stats.svg";
-import icon5 from "../../../images/svg/bulb.svg";
-import icon6 from "../../../images/svg/comparative.svg";
-import icon7 from "../../../images/svg/cash-flow.svg";
-import icon8 from "../../../images/svg/statistics.svg";
+// import bg from "../../images/svg/Ellipse 411.png";
+import icon1 from "../../images/svg/download.svg";
+import icon2 from "../../images/svg/ratio.svg";
+import icon3 from "../../images/svg/data-analysis.svg";
+import icon4 from "../../images/svg/stats.svg";
+import icon5 from "../../images/svg/bulb.svg";
+import icon6 from "../../images/svg/comparative.svg";
+import icon7 from "../../images/svg/cash-flow.svg";
+import icon8 from "../../images/svg/statistics.svg";
 
-import icon9 from "../../../images/svg/incomes.svg";
+import icon9 from "../../images/svg/incomes.svg";
 
 import Styles from "./style.module.css";
+import { withTranslation } from "react-i18next";
+import { withRouter, Link } from "react-router-dom";
 
-export default class CompanyCats extends Component {
+class CompanyCats extends Component {
   render() {
+    const { match } = this.props
     return (
       <Fragment>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="container mt-4">
           <div className="row">
             <div className="col-lg-4 col-md-6 mb-4">
-              <div className={Styles.divSty}>
+              <Link to={`/company/input/${match?.params?.company}`} className={Styles.divSty}>
                 <div className={`${Styles.iconSt}`}>
                   <SVG src={icon1} />
                 </div>
@@ -34,7 +37,7 @@ export default class CompanyCats extends Component {
                     diam nonumy eirmod tempor invidunt ut labore et dolore{" "}
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
             <div className="col-lg-4 col-md-6 mb-4">
               <div className={Styles.divSty}>
@@ -154,3 +157,5 @@ export default class CompanyCats extends Component {
     );
   }
 }
+
+export default withTranslation()(withRouter(CompanyCats))

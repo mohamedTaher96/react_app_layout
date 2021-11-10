@@ -5,9 +5,18 @@ import logo from "../../../images/logo.png";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Styles from "./style.module.css";
+import Request from "../../../requests/Request";
+import { withTranslation } from "react-i18next";
+import { setVal } from "../../../store/action";
+import { connect } from "react-redux";
 
-export default class SignUp extends Component {
+class SignUp extends Component {
+  state = {
+    error: ""
+  }
   render() {
+    const { error } = this.state
+    const { t, _setVal } = this.props
     return (
       <Fragment>
         <div className="row align-items-center">
@@ -38,17 +47,45 @@ export default class SignUp extends Component {
                   password: yup
                     .string()
                     .required("Please Enter your password")
-                    .matches(
-                      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-                    ),
+                  // .matches(
+                  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                  //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+                  // )
+                  ,
                   confirmPassword: yup
                     .string()
+                    .required("Please Enter your confirm password")
                     .oneOf([yup.ref("password"), null], "Passwords must match"),
                 })}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                   setTimeout(async () => {
-                    alert(JSON.stringify(values, null, 2));
+                    const data = {
+                      data: {
+                        auth__user: [{
+                          email: values.email,
+                          password: values?.password,
+                        }]
+                      }
+                    }
+                    Request.sendRequest("update_models/", data)
+                      .then(res => {
+                        const loginData = {
+                          "username": values?.email,
+                          "password": values?.password
+                        }
+                        Request.sendRequest("auth/", loginData)
+                          .then(res => {
+                            _setVal("SETVALUE", {
+                              user: res?.data?.user,
+                              _token: res?.data?.token
+                            })
+                          })
+                      })
+                      .catch(err => {
+                        this.setState({
+                          error: t(`${err?.response?.data?.msg}`)
+                        })
+                      })
                     // this.props.history.push("/login");
                   }, 400);
                 }}
@@ -56,6 +93,7 @@ export default class SignUp extends Component {
                 {({ isSubmitting }) => (
                   <Form>
                     <div className="mb-3">
+                      {error && <div className="alert alert-danger">{error}</div>}
                       <label className={`${Styles.labelSt} form-label`}>
                         Email Address
                       </label>
@@ -104,7 +142,7 @@ export default class SignUp extends Component {
 
                     <button
                       type="submit"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting && !error}
                       className={`${Styles.btnSt} btn`}
                     >
                       Start Managing
@@ -125,3 +163,10 @@ export default class SignUp extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    _setVal: (type, value) => { dispatch(setVal(type, value)); },
+  }
+}
+export default connect(null, mapDispatchToProps)(withTranslation()(SignUp))

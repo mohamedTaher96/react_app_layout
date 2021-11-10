@@ -4,11 +4,20 @@ import img1 from "../../../images/signin.jpg";
 import logo from "../../../images/logo.png";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
+import { connect } from "react-redux"
 import Styles from "./style.module.css";
+import Request from "../../../requests/Request";
+import { withTranslation } from "react-i18next";
+import { setVal } from "../../../store/action";
+import { groupBy } from "lodash";
 
-export default class SignIn extends Component {
+class SignIn extends Component {
+  state = {
+    error: ""
+  }
   render() {
+    const { error } = this.state
+    const { t, _setVal } = this.props
     return (
       <Fragment>
         <div className="row align-items-center">
@@ -25,7 +34,7 @@ export default class SignIn extends Component {
                 <h4 className={Styles.headTxt}>Log In</h4>
                 <div className={Styles.secTxt}>
                   <span>Don't have an account?</span>&nbsp;
-                  <Link to="/">Sign up</Link>
+                  <Link to="/signup">Sign up</Link>
                 </div>
               </div>
               <Formik
@@ -38,14 +47,33 @@ export default class SignIn extends Component {
                   password: yup
                     .string()
                     .required("Please Enter your password")
-                    .matches(
-                      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-                    ),
                 })}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                   setTimeout(async () => {
-                    alert(JSON.stringify(values, null, 2));
+                    const data = {
+                      "username": values?.email,
+                      "password": values?.password
+                    }
+                    Request.sendRequest("auth/", data)
+                      .then(res => {
+                        const fetchData = {
+                          settings__schedule: {}
+                        }
+                        Request.sendRequest("multi_query/", fetchData)
+                        .then(fetchRes => {
+                            const schedule = groupBy(fetchRes?.data?.settings__schedule, function(b) { return b.type})
+                            _setVal("SETVALUE", {
+                              user: res?.data?.user,
+                              schedule: schedule,
+                              _token: res?.data?.token
+                            })
+                          })
+                      })
+                      .catch(err => {
+                        this.setState({
+                          error: t(`${err?.response?.data?.msg}`)
+                        })
+                      })
                     // this.props.history.push("/login");
                   }, 400);
                 }}
@@ -53,6 +81,7 @@ export default class SignIn extends Component {
                 {({ isSubmitting }) => (
                   <Form>
                     <div className="mb-3">
+                      {error && <div className="alert alert-danger">{error}</div>}
                       <label className={`${Styles.labelSt} form-label`}>
                         Email Address
                       </label>
@@ -86,7 +115,7 @@ export default class SignIn extends Component {
 
                     <button
                       type="submit"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting && !error}
                       className={`${Styles.btnSt} btn`}
                     >
                       Start Managing
@@ -106,3 +135,9 @@ export default class SignIn extends Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    _setVal: (type, value) => { dispatch(setVal(type, value)); },
+  }
+}
+export default connect(null, mapDispatchToProps)(withTranslation()(SignIn))
