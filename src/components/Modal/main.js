@@ -17,7 +17,9 @@ function Main(props) {
                     {closeBtn && <button type="button" className="btn btn-light-primary font-weight-bold" data-dismiss="modal"
                         onClick={props.handleClose}
                     >{closeBtn}</button>}
-                    {save && <button type="button" className="btn btn-primary font-weight-bold">{save}</button>}
+                    {save && <button type="button" className="btn btn-primary font-weight-bold"
+                        onClick={props.handleSubmit}
+                    >{save}</button>}
                 </Modal.Footer>
             )}
         </Modal>

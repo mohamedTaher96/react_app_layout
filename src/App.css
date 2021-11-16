@@ -1,1 +1,4 @@
 
+table,table tr,table td{
+    z-index: 20;
+}

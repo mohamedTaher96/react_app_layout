@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import { keys, get, values } from "lodash"
 import "./style.css";
+import swal from 'sweetalert';
+import { withTranslation } from 'react-i18next';
 
 const EditableContext = React.createContext(null);
 
@@ -34,17 +37,29 @@ const EditableCell = ({
   }, [editing]);
 
   const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({
-      [dataIndex]: record[dataIndex],
-    });
+    if (record[dataIndex]?.props?.edit) {
+      if(record[dataIndex]?.props?.edit=="check"){
+
+      }else{
+        setEditing(!editing);
+        form.setFieldsValue({
+          [dataIndex]: record[dataIndex],
+        });
+      }
+    }else{
+      swal("Not Editable!", "this value is calculated and not editable", "error")
+    }
   };
 
   const save = async () => {
     try {
-      const values = await form.validateFields();
+      const recordValue = await form.validateFields();
+      const cellProps = get(record, keys(recordValue)[0])?.props
+      const value = values(recordValue)[0]
       toggleEdit();
-      handleSave({ ...record, ...values });
+      if (value && typeof (value) === "string") {
+        handleSave(cellProps, value);
+      }
     } catch (errInfo) {
       console.log('Save failed:', errInfo);
     }
@@ -93,35 +108,8 @@ class EditableTable extends React.Component {
       columns: props?.columns
     }
   }
-  handleDelete = (key) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({
-      dataSource: dataSource.filter((item) => item.key !== key),
-    });
-  };
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: '32',
-      address: `London, Park Lane no. ${count}`,
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
-  };
-  handleSave = (row) => {
-    const newData = [...this.state.dataSource];
-
-    const index = newData.findIndex((item) => row.key === item.key);
-
-    const item = newData[index];
-    newData.splice(index, 1, { ...item, ...row });
-    this.setState({
-      dataSource: newData,
-    });
+  handleSave = (item, value) => {
+    this.props.HandleEdit(item, value)
   };
 
   render() {
@@ -133,7 +121,7 @@ class EditableTable extends React.Component {
     };
     let { dataSource, columns } = this.state
     columns = columns.map((col) => {
-      if (!col.editable) {
+      if (!col?.editable) {
         return col;
       }
 
@@ -141,7 +129,7 @@ class EditableTable extends React.Component {
         ...col,
         onCell: (record) => ({
           record,
-          editable: col.editable,
+          editable: col?.editable,
           dataIndex: col.dataIndex,
           title: col.title,
           handleSave: this.handleSave,
@@ -166,8 +154,9 @@ class EditableTable extends React.Component {
           dataSource={dataSource}
           columns={columns}
           scroll={{
-            scrollToFirstRowOnChange:true,
-            x: true
+            scrollToFirstRowOnChange: true,
+            x: true,
+            y:500
           }}
           pagination={false}
         />
@@ -176,4 +165,4 @@ class EditableTable extends React.Component {
   }
 }
 
-export default EditableTable
+export default withTranslation()(EditableTable)

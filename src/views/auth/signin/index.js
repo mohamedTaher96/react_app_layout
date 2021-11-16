@@ -9,7 +9,7 @@ import Styles from "./style.module.css";
 import Request from "../../../requests/Request";
 import { withTranslation } from "react-i18next";
 import { setVal } from "../../../store/action";
-import { groupBy } from "lodash";
+import { map, set } from "lodash";
 
 class SignIn extends Component {
   state = {
@@ -61,7 +61,8 @@ class SignIn extends Component {
                         }
                         Request.sendRequest("multi_query/", fetchData)
                         .then(fetchRes => {
-                            const schedule = groupBy(fetchRes?.data?.settings__schedule, function(b) { return b.type})
+                          const schedule = {}
+                          map(fetchRes?.data?.settings__schedule, (d=>(set(schedule, `${d.type}.${d.id}`, d))))
                             _setVal("SETVALUE", {
                               user: res?.data?.user,
                               schedule: schedule,
