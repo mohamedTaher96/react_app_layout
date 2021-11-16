@@ -22,10 +22,10 @@ code {
   src: local("IBM Plex Sans"),
     url(./Fonts/IBMPlexSans-Regular.ttf) format("truetype");
 }
-/* @font-face {
+@font-face {
   font-family: "Helvetica";
   src: local("Helvetica"), url(./Fonts/Helvetica.ttf) format("truetype");
-} */
+}
 @font-face {
   font-family: "NeusaNextPro";
   src: local("NeusaNextPro"),
@@ -35,4 +35,9 @@ code {
 /*--------------------------- Global fonts------------------------ */
 a {
   text-decoration: none;
+}
+.DFLEX {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

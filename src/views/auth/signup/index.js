@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import img1 from "../../../images/img11.png";
+
 import logo from "../../../images/logo.png";
+import img1 from "../../../images/img879.png";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Styles from "./style.module.css";
@@ -12,11 +13,11 @@ import { connect } from "react-redux";
 
 class SignUp extends Component {
   state = {
-    error: ""
-  }
+    error: "",
+  };
   render() {
-    const { error } = this.state
-    const { t, _setVal } = this.props
+    const { error } = this.state;
+    const { t, _setVal } = this.props;
     return (
       <Fragment>
         <div className="row align-items-center">
@@ -44,14 +45,11 @@ class SignUp extends Component {
                 }}
                 validationSchema={yup.object().shape({
                   email: yup.string().required().email(),
-                  password: yup
-                    .string()
-                    .required("Please Enter your password")
+                  password: yup.string().required("Please Enter your password"),
                   // .matches(
                   //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
                   //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
                   // )
-                  ,
                   confirmPassword: yup
                     .string()
                     .required("Please Enter your confirm password")
@@ -61,31 +59,32 @@ class SignUp extends Component {
                   setTimeout(async () => {
                     const data = {
                       data: {
-                        auth__user: [{
-                          email: values.email,
-                          password: values?.password,
-                        }]
-                      }
-                    }
+                        auth__user: [
+                          {
+                            email: values.email,
+                            password: values?.password,
+                          },
+                        ],
+                      },
+                    };
                     Request.sendRequest("update_models/", data)
-                      .then(res => {
+                      .then((res) => {
                         const loginData = {
-                          "username": values?.email,
-                          "password": values?.password
-                        }
-                        Request.sendRequest("auth/", loginData)
-                          .then(res => {
-                            _setVal("SETVALUE", {
-                              user: res?.data?.user,
-                              _token: res?.data?.token
-                            })
-                          })
+                          username: values?.email,
+                          password: values?.password,
+                        };
+                        Request.sendRequest("auth/", loginData).then((res) => {
+                          _setVal("SETVALUE", {
+                            user: res?.data?.user,
+                            _token: res?.data?.token,
+                          });
+                        });
                       })
-                      .catch(err => {
+                      .catch((err) => {
                         this.setState({
-                          error: t(`${err?.response?.data?.msg}`)
-                        })
-                      })
+                          error: t(`${err?.response?.data?.msg}`),
+                        });
+                      });
                     // this.props.history.push("/login");
                   }, 400);
                 }}
@@ -93,7 +92,9 @@ class SignUp extends Component {
                 {({ isSubmitting }) => (
                   <Form>
                     <div className="mb-3">
-                      {error && <div className="alert alert-danger">{error}</div>}
+                      {error && (
+                        <div className="alert alert-danger">{error}</div>
+                      )}
                       <label className={`${Styles.labelSt} form-label`}>
                         Email Address
                       </label>
@@ -166,7 +167,9 @@ class SignUp extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _setVal: (type, value) => { dispatch(setVal(type, value)); },
-  }
-}
-export default connect(null, mapDispatchToProps)(withTranslation()(SignUp))
+    _setVal: (type, value) => {
+      dispatch(setVal(type, value));
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(withTranslation()(SignUp));

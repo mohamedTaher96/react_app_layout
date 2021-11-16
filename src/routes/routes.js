@@ -1,6 +1,6 @@
 import SignIn from "../views/auth/signin";
 import SignUp from "../views/auth/signup";
-import Home from "../views/home/index";
+import Home from "../views/home";
 import AuthInfo from "../views/auth/info.js";
 import Company from "../views/Company";
 import Dashboard from "../views/dashboard";
@@ -10,7 +10,7 @@ export const MainRoutes = [
   {
     path: "/",
     component: Company,
-    exact: true
+    exact: true,
   },
   {
     path: "/company/input/:company",
@@ -39,5 +39,8 @@ export const AuthRoutes = [
     path: "/signin",
     component: SignIn,
   },
-
+  {
+    path: "/home",
+    component: Home,
+  },
 ];
