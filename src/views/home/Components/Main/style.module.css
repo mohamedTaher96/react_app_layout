@@ -8,7 +8,7 @@
     url(../../../../images/home/leon-Oalh2MojUuk-unsplash.png);
 }
 .secWidth {
-  width: 65%;
+  width: 90%;
   margin: auto;
 }
 .headSec {
@@ -19,14 +19,14 @@
   margin-top: -100px;
 }
 .emptyHalf {
-  width: 50%;
+  width: 0%;
 }
 .mainHalf {
-  width: 50%;
+  width: 100%;
 }
 .headTxt {
   font-family: "IBM Plex Sans";
-  font-size: 35px;
+  font-size: 20px;
   font-weight: 500;
   color: #fff;
 }
@@ -51,29 +51,74 @@
   margin-right: 10px;
 }
 .firstBtn {
-  margin: 20px 25px 0 0;
-  padding: 10px 30px;
+  margin: 20px 10px 0 0;
+  padding: 10px 20px;
   border-radius: 34px;
   background-color: #1b76bf;
   color: #fff;
   font-family: "IBM Plex Sans";
-  font-size: 14px;
+  font-size: 12px;
 }
 .firstBtn:hover {
   background-color: #fff;
   color: #1b76bf;
 }
 .SecBtn {
-  margin: 20px 25px 0 0;
+  margin: 20px 0px 0 0;
   color: white;
   font-family: "IBM Plex Sans";
-  font-size: 14px;
-  padding: 10px 30px;
+  font-size: 12px;
+  padding: 10px 20px;
   border-radius: 34px;
 }
 .SecBtn:hover {
   background-color: #fff;
   color: #1b76bf;
   border-radius: 34px;
-  padding: 10px 30px;
+  padding: 10px 20px;
+}
+@media only screen and (min-width: 700px) {
+  .emptyHalf {
+    width: 30%;
+  }
+  .mainHalf {
+    width: 70%;
+  }
+  .headTxt {
+    font-size: 35px;
+  }
+  .firstBtn {
+    margin: 20px 25px 0 0;
+    padding: 10px 30px;
+    font-size: 14px;
+  }
+  .SecBtn {
+    margin: 20px 25px 0 0;
+    font-size: 14px;
+    padding: 10px 30px;
+  }
+  .SecBtn:hover {
+    padding: 10px 30px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .secWidth {
+    width: 65%;
+    margin: auto;
+  }
+  .headTxt {
+    font-size: 35px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .emptyHalf {
+    width: 50%;
+  }
+  .mainHalf {
+    width: 50%;
+  }
+  .secWidth {
+    width: 65%;
+    margin: auto;
+  }
 }

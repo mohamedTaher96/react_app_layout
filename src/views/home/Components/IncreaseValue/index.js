@@ -12,7 +12,7 @@ const IncreaseValue = (props) => {
     <Fragment>
       <div className="container mt-5">
         <div className="row align-items-center justify-content-center mb-5">
-          <div className="col-md-6 mb-5 pe-5">
+          <div className="col-lg-6 mb-5 pe-5">
             <div>
               <span className={Styles.tagsSt}>Money Management</span>
               <div className={`${Styles.headTxt} d-block`}>
@@ -63,7 +63,7 @@ const IncreaseValue = (props) => {
               </button>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-lg-6">
             <div>
               <img src={img1} alt="first" className={Styles.imgSt} />
             </div>

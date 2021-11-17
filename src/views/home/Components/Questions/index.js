@@ -27,7 +27,7 @@ class Questions extends Component {
         <div className={Styles.secBg}>
           <div className="container">
             <div className="row align-items-center mt-5">
-              <div className="col-md-6">
+              <div className="col-lg-6">
                 <div>
                   <span className={Styles.studSt}>MAIN PRINCIPLES</span>
                   <span className={`${Styles.headTxt} d-block`}>
@@ -164,7 +164,7 @@ class Questions extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6">
+              <div className="col-lg-6">
                 <img src={img1} alt="first" className="w-100" />
               </div>
             </div>

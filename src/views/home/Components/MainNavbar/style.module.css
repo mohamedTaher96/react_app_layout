@@ -1,5 +1,7 @@
 .bordBottom {
   border-bottom: 2px solid #fff;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 .iconsSt i {
   color: #0a82e0;
@@ -52,13 +54,7 @@
 .locAndMail i {
   margin-right: 7px;
 }
-.heightDiv {
-  background-color: #fff;
-  height: 50px;
-  width: 2px;
-  border-radius: 30px;
-  margin-right: 10px;
-}
+
 /* ------------------------sechalf--------------------------- */
 .logoSt {
   width: 60px;
@@ -82,3 +78,46 @@
   color: #fff;
 }
 /* ------------------------sechalf--------------------------- */
+.Dflex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0;
+}
+.Dflex div {
+  margin: 5px 0;
+}
+.collapseIcon {
+  color: #fff;
+}
+@media only screen and (min-width: 768px) {
+  .Dflex {
+    flex-direction: row;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .heightDiv {
+    background-color: #fff;
+    height: 50px;
+    width: 2px;
+    border-radius: 30px;
+    margin: 0 10px;
+  }
+  .Dflex {
+    flex-direction: row;
+    margin: 0;
+  }
+  .Dflex div {
+    margin: 0 10px;
+  }
+  .locAndMail {
+    font-size: 10px;
+  }
+}
+@media only screen and (min-width: 110px) {
+  .locAndMail {
+    font-size: 12px;
+  }
+}

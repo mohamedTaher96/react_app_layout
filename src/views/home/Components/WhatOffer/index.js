@@ -30,7 +30,7 @@ export default class WhatOffer extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-3 col-sm-6">
+            <div className="col-lg-3 col-sm-6 mb-3">
               <div className={Styles.colStyle}>
                 <div className={`${Styles.iconSt}`}>
                   <SVG src={icon1} />
@@ -43,7 +43,7 @@ export default class WhatOffer extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3  col-sm-6 mb-4">
+            <div className="col-lg-3  col-sm-6 mb-3">
               <div className={Styles.colStyle1}>
                 <div className={`${Styles.iconSt}`}>
                   <SVG src={icon1} />
@@ -56,7 +56,7 @@ export default class WhatOffer extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3  col-sm-6">
+            <div className="col-lg-3  col-sm-6 mb-3">
               <div className={Styles.colStyle}>
                 <div className={`${Styles.iconSt}`}>
                   <SVG src={icon1} />
@@ -69,7 +69,7 @@ export default class WhatOffer extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3  col-sm-6">
+            <div className="col-lg-3  col-sm-6 mb-3">
               <div className={Styles.colStyle}>
                 <div className={`${Styles.iconSt}`}>
                   <SVG src={icon1} />

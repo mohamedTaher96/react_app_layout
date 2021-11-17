@@ -58,3 +58,21 @@
   color: #4eadfe;
   margin-left: 10px;
 }
+@media only screen and (min-width: 1200px) {
+  .mainTxt {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .secTxt {
+    font-size: 10px;
+  }
+}
+@media only screen and (min-width: 1350px) {
+  .mainTxt {
+    font-size: 20px;
+    font-weight: normal;
+  }
+  .secTxt {
+    font-size: 12px;
+  }
+}

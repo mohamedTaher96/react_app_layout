@@ -30,13 +30,13 @@ export default class Pricing extends Component {
               <div className={Styles.switchTxt}>Billed Yearly</div>
             </div>
             <div className="row">
-              <div className="col-lg-4 mb-4">
+              <div className="col-lg-4 col-md-6 mb-4">
                 <Basic />
               </div>
-              <div className="col-lg-4 mb-4">
+              <div className="col-lg-4 col-md-6 mb-4">
                 <Startup />
               </div>
-              <div className="col-lg-4 mb-4">
+              <div className="col-lg-4 col-md-6 mb-4">
                 <Enterprise />
               </div>
             </div>

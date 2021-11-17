@@ -9,7 +9,7 @@ export default class Footer extends Component {
         <div className={Styles.footerSt}>
           <div className="container">
             <div className="row align-items-center">
-              <div className="col-xl-3 col-md-6">
+              <div className="col-xl-3 col-sm-6">
                 <div>
                   <img src={logo} alt="img1" className={Styles.logoSt} />
                   <div className={Styles.lineTxt}>
@@ -27,7 +27,7 @@ export default class Footer extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-xl-3 col-md-6 pe-5">
+              <div className="col-xl-3 col-sm-6 pe-5">
                 <div className="d-flex flex-column">
                   <div className={Styles.headTxt}>Services Link</div>
                   <span className={Styles.blueTxt}>Business</span>
@@ -37,7 +37,7 @@ export default class Footer extends Component {
                   <span className={Styles.blueTxt}>Design</span>
                 </div>
               </div>
-              <div className="col-xl-3 col-md-6">
+              <div className="col-xl-3 col-sm-6">
                 <div className="d-flex flex-column">
                   <div className={Styles.headTxt}>Information</div>
                   <p className={Styles.secTxt}>Tel : +0890-564-5644</p>
@@ -47,7 +47,7 @@ export default class Footer extends Component {
                   </p>
                 </div>
               </div>
-              <div className="col-xl-3 col-md-6">
+              <div className="col-xl-3 col-sm-6">
                 <div className="d-flex flex-column">
                   <div className={Styles.getStart}>Ready to Get Started?</div>
                   <span className={Styles.lineTxt}>

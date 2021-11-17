@@ -8,10 +8,9 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: right;
-  padding: 50px 0 30px;
+  padding: 20px 0 0;
   margin-top: 60px;
-  margin-bottom: 260px;
-  height: 600px;
+  margin-bottom: 60px;
 }
 .secWid {
   width: 80%;
@@ -40,7 +39,7 @@
 }
 .secTxt {
   font-family: "IBM Plex Sans" !important;
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
   color: #484848;
   font-weight: bold;
@@ -87,7 +86,7 @@
 .typeSt {
   color: #484848;
   font-family: "IBM Plex Sans" !important;
-  font-size: 35px;
+  font-size: 20px;
 }
 .priceNum {
   color: #484848;
@@ -147,7 +146,7 @@
 .typeSt1 {
   color: #fff;
   font-family: "IBM Plex Sans" !important;
-  font-size: 35px;
+  font-size: 20px;
 }
 .priceNum1 {
   color: #fff;
@@ -167,3 +166,94 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.6);
 }
 /* ------------------center div------------------ */
+@media only screen and (min-width: 992px) {
+  .typeSt {
+    font-size: 15px;
+  }
+  .typeSt1 {
+    font-size: 15px;
+  }
+  .priceNum {
+    font-size: 45px !important;
+  }
+  .priceNum1 {
+    color: #fff;
+    font-family: "IBM Plex Sans" !important;
+    font-size: 45px !important;
+  }
+  .secTxt {
+    font-size: 16px;
+  }
+  .checkSty span {
+    font-size: 12px;
+  }
+  .checkSty1 span {
+    font-size: 12px;
+  }
+  .checkSty2 span {
+    font-size: 12px;
+  }
+  .perMonth {
+    right: -22px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .typeSt {
+    font-size: 25px;
+  }
+  .typeSt1 {
+    font-size: 25px;
+  }
+  .priceNum {
+    font-size: 45px !important;
+  }
+  .priceNum1 {
+    color: #fff;
+    font-family: "IBM Plex Sans" !important;
+    font-size: 45px !important;
+  }
+  .secTxt {
+    font-size: 16px;
+  }
+  .checkSty span {
+    font-size: 16px;
+  }
+  .checkSty1 span {
+    font-size: 16px;
+  }
+  .checkSty2 span {
+    font-size: 16px;
+  }
+  .perMonth {
+    right: -22px;
+  }
+}
+@media only screen and (min-width: 1350px) {
+  .typeSt {
+    font-size: 35px;
+  }
+  .typeSt1 {
+    font-size: 35px;
+  }
+  .priceNum {
+    font-size: 55px !important;
+  }
+  .priceNum1 {
+    font-size: 55px !important;
+  }
+  .secTxt {
+    font-size: 16px;
+  }
+  .checkSty span {
+    font-size: 16px;
+  }
+  .checkSty1 span {
+    font-size: 16px;
+  }
+  .checkSty2 span {
+    font-size: 16px;
+  }
+  .perMonth {
+    right: -22px;
+  }
+}

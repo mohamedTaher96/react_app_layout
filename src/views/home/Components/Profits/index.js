@@ -11,7 +11,7 @@ export default class Profits extends Component {
       <Fragment>
         <div className={`${Styles.secWidth} py-5`}>
           <div className="row">
-            <div className="col-lg-4 mb-4">
+            <div className="col-xl-4 col-md-6 mb-4">
               <div>
                 <div className="d-flex align-items-center">
                   <div className={`${Styles.iconSt}`}>
@@ -32,7 +32,7 @@ export default class Profits extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 mb-4">
+            <div className="col-xl-4 col-md-6 mb-4">
               <div>
                 <div className="d-flex align-items-center">
                   <div className={`${Styles.iconSt2}`}>
@@ -53,7 +53,7 @@ export default class Profits extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 mb-4">
+            <div className="col-xl-4 col-md-6 mb-4">
               <div>
                 <div className="d-flex align-items-center">
                   <div className={`${Styles.iconSt2}`}>
