@@ -4,9 +4,9 @@ import React from 'react'
 export const Columns = (schedule, filter) => {
     const columns = get(schedule, filter?.type)
     let res = map(columns, (column) => {
-        if (!(column?.filtered==1)) {
+        if (!(column?.filtered == 1)) {
             return {
-                title: column?.value,
+                title: <div><span>{column?.value}</span>{column?.parent && <div>{column?.parent}</div>} </div>,
                 dataIndex: column?.id,
                 editable: true,
             }

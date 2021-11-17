@@ -11,6 +11,13 @@ import InlineSVG from "react-inlinesvg/esm";
 import Styles from "./style.module.css";
 
 export default class Navbar extends Component {
+  handeSignOut = () => {
+    this.props._setVal("SETVALUE", {
+      user: null,
+      schedule: null,
+      _token: null
+    })
+  }
   render() {
     return (
       <Fragment>
@@ -51,44 +58,26 @@ export default class Navbar extends Component {
                   <InlineSVG src={icon1} />
                 </li>
                 <li
-                  className={`${Styles.iconSt} ${Styles.dropdownSt} nav-item ml-2`}
+                  className={`${Styles.iconSt} nav-item ml-2`}
                 >
                   <InlineSVG src={icon3} />
-
-                  <div className={Styles.dropdownContent}>
-                    <div className="row">
-                      <div className="col-6">
-                        <Link to="/companycats">
-                          <div className={Styles.divSty}>
-                            <img src={img2} alt="company" />
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="col-6">
-                        <Link to="/companycats">
-                          <div className={Styles.divSty}>
-                            <img src={img2} alt="company" />
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="col-6">
-                        <Link to="/companycats">
-                          <div className={Styles.divSty}>
-                            <i className="fas fa-plus-circle"></i>
-                            <span>Add Company</span>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
                 </li>
                 <li className={`${Styles.iconSt} nav-item mx-2`}>
                   <InlineSVG src={icon2} />
                   <i className={`${Styles.greenDot1} fas fa-circle`}></i>
                 </li>
-                <li className={`${Styles.profImg} nav-item `}>
+                <li className={`${Styles.profImg} ${Styles.dropdownSt} nav-item `}>
                   <img src={profImg} alt="img1" />
                   <i className={`${Styles.greenDot2} fas fa-circle`}></i>
+                  <div className={Styles.dropdownContent}>
+                    <div className="col-12">
+                      <div className={Styles.divSty}
+                        onClick={this.handeSignOut}
+                      >
+                        <span>Signout</span>
+                      </div>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </div>

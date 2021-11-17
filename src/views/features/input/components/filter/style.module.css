@@ -16,3 +16,20 @@
     background-color: #6c757d;
     color: #fff;
 }
+.parent{
+    background-color: #6c757d;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px 0px;
+}
+.parentSub{
+    background-color: #eee;
+    border: 1px solid #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 3px;
+}

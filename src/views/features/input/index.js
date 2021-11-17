@@ -7,10 +7,12 @@ import { Columns } from './helpers/columns';
 import { DataSource } from './helpers/dataSource'
 import serializer from "../../../requests/serializer";
 import ItemsBar from './components/items';
-import { get, set } from 'lodash';
+import { get, map, set } from 'lodash';
 import Spinner from "../../../components/Loader/Spinenr";
 import swal from 'sweetalert';
 import Filter from './components/filter';
+import Modal from "../../../components/Modal/main";
+import NickName from './components/nickname';
 
 class CompanyInput extends Component {
     state = {
@@ -23,6 +25,12 @@ class CompanyInput extends Component {
         product__company_items: {},
         product__company_item_values: {},
         product__company_item_check: {},
+        modal: {
+            show: false,
+            type: "",
+            item: "",
+            companyItem: ""
+        },
         loading: true
     }
     componentDidMount() {
@@ -181,12 +189,84 @@ class CompanyInput extends Component {
                 }
             })
     }
+    handelShowModal = (type, item, row) => {
+        if (type === "nickname") {
+            this.setState({
+                ...this.state,
+                modal: {
+                    show: true,
+                    type: type,
+                    item: item,
+                    companyItem: row
+                }
+            })
+        } else {
+            swal({
+                title: "Remove Item!",
+                text: "are you sure you want to remove item from company?",
+                icon: "warning",
+                buttons: ["cancel", "remove"],
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({ ...this.state, loading: true })
+                        const data = {
+                            data: {
+                                Product__company_items: [
+                                    {
+                                        id: row?.id,
+                                        deleted: true
+                                    }
+                                ]
+                            }
+                        }
+                        Request.sendRequest("update_models/", data)
+                            .then(res => {
+                                const item = res?.data?.Product__company_items[0]
+                                this.setState({
+                                    ...this.state,
+                                    product__company_items: {
+                                        ...this.state.product__company_items,
+                                        [item?.item]: item
+                                    },
+                                    loading: false
+                                })
+                                swal("Remove Item!", "Successfully remove item from company", "success")
+                            })
+                    }
+                })
+        }
+    }
+    handelSubmitItem = (item) => {
+        this.setState({
+            loading: true,
+        }, () => {
+            setTimeout(() => {
+                console.log(item)
+                this.setState({
+                    ...this.state,
+                    product__company_items: {
+                        ...this.state.product__company_items,
+                        [item?.item]: item,
+                    },
+                    loading: false,
+                    modal: {
+                        show: false
+                    }
+                })
+            }, 500)
+        })
+
+    }
+
 
     render() {
-        const { loading, filter, settings_schedule, settings__items, settings__item_category, product__company_items, product__company_item_values, product__company_item_check } = this.state
+        const { loading, filter, settings_schedule, settings__items, settings__item_category, product__company_items, product__company_item_values, product__company_item_check, modal } = this.state
         const data = DataSource(settings_schedule, filter, settings__items, product__company_items, product__company_item_values, product__company_item_check, this);
         const columns = Columns(settings_schedule, filter);
-        console.log(columns, "settings_schedule")
+        console.log(product__company_items, "Product__company_items")
+        // console.log(columns, "settings_schedule")
         return (
             <div>
                 {loading ?
@@ -211,6 +291,18 @@ class CompanyInput extends Component {
                             columns={columns}
                             HandleEdit={(item, value) => { this.HandleEdit(item, value) }}
                         />
+                        <Modal show={modal?.show} handleClose={() => { this.setState({ ...this.state, modal: { show: false } }) }}
+                            title={`${modal?.item?.name} ${modal?.type}`}
+                        >
+                            {modal?.type === "nickname" &&
+                                <NickName
+                                    companyItems={modal?.companyItem}
+                                    item={modal?.item}
+                                    handelClose={() => { this.setState({ ...this.state, modal: { show: false } }) }}
+                                    handelSubmit={(item) => { this.handelSubmitItem(item) }}
+                                />
+                            }
+                        </Modal>
                     </div>}
 
             </div>

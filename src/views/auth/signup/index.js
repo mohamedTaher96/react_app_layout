@@ -9,6 +9,7 @@ import Request from "../../../requests/Request";
 import { withTranslation } from "react-i18next";
 import { setVal } from "../../../store/action";
 import { connect } from "react-redux";
+import { map, set } from "lodash";
 
 class SignUp extends Component {
   state = {
@@ -75,10 +76,19 @@ class SignUp extends Component {
                         }
                         Request.sendRequest("auth/", loginData)
                           .then(res => {
-                            _setVal("SETVALUE", {
-                              user: res?.data?.user,
-                              _token: res?.data?.token
-                            })
+                            const fetchData = {
+                              settings__schedule: {}
+                            }
+                            Request.sendRequest("multi_query/", fetchData)
+                              .then(fetchRes => {
+                                const schedule = {}
+                                map(fetchRes?.data?.settings__schedule, (d => (set(schedule, `${d.type}.${d.id}`, d))))
+                                _setVal("SETVALUE", {
+                                  user: res?.data?.user,
+                                  schedule: schedule,
+                                  _token: res?.data?.token
+                                })
+                              })
                           })
                       })
                       .catch(err => {

@@ -13,6 +13,7 @@
 .divSty img {
   width: 150px;
   height: 50px;
+  object-fit: contain;
 }
 .divSty i {
   color: #2196f3;

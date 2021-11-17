@@ -1,15 +1,17 @@
-import { get, map } from 'lodash';
+import { get, map, set } from 'lodash';
 import React, { useState } from 'react'
 import Modal from "../../../../../components/Modal/main";
 import Styles from "./style.module.css";
 
-export default function Filter({type, schedule, handelChangeInput, handleSubmit }) {
+export default function Filter({ type, schedule, handelChangeInput, handleSubmit }) {
     const [state, setState] = useState({
         show: false,
         type: type,
         selected: "year"
     })
     const filterSchedule = get(schedule, state?.type)
+    const _schedule = {}
+    map(filterSchedule, (d => (set(_schedule, `${d.parent}.${d.id}`, d))))
     return (
         <div>
             <button className="btn btn-success m-1"
@@ -32,28 +34,22 @@ export default function Filter({type, schedule, handelChangeInput, handleSubmit 
                         <option value="month">Month</option>
                     </select>
                 </div>
-                {/* <div className="d-flex align-items-center ">
-                    <div className={`${Styles.tab} ${state?.selected === "year" && Styles.active}`}
-                        onClick={() => { setState({ ...state, selected: "year" }) }}
-                    >Year</div>
-                    {state?.type === "head" && <div className={`${Styles.tab} ${state?.selected === "head" && Styles.active}`}
-                        onClick={() => { setState({ ...state, selected: "head" }) }}
-                    >Head</div>}
-                    {state?.type === "quarter" && <div className={`${Styles.tab} ${state?.selected === "quarter" && Styles.active}`}
-                        onClick={() => { setState({ ...state, selected: "quarter" }) }}
-                    >Quarter</div>}
-                    {state?.type === "month" && <div className={`${Styles.tab} ${state?.selected === "month" && Styles.active}`}
-                        onClick={() => { setState({ ...state, selected: "month" }) }}
-                    >Month</div>}
-                </div> */}
                 <div>
                     <div className="row">
-                        {map(filterSchedule, (item, key) => {
+                        {map(_schedule, (item, key) => {
                             return <div className="col-lg-3 p-3 fw-bolder col-sm-6" key={key}>
-                                <input type="checkbox" className=""
-                                    checked={item?.filtered == 1 ? 0 : 1}
-                                    onClick={() => { handelChangeInput(state?.type, item?.id) }}
-                                /> {item?.value}
+                                <div className={Styles.parent}>{key}</div>
+                                {map(item, (sub) => {
+                                    return (
+                                        <div className={Styles.parentSub}
+                                            onClick={() => { handelChangeInput(state?.type, sub?.id) }}
+                                        >
+                                            <input type="radio" className=""
+                                                checked={sub?.filtered == 1 ? 0 : 1}
+                                            /> {sub?.value}
+                                        </div>
+                                    )
+                                })}
                             </div>
                         })}
                     </div>

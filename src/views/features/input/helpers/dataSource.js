@@ -1,8 +1,11 @@
-import { get, map } from 'lodash'
+import { flatten, flattenDeep, get, map, set, toArray, without } from 'lodash'
 import React from 'react'
 import serializer from '../../../../requests/serializer'
 import Styles from "../style.module.css";
 import { Menu, Dropdown, Button } from 'antd';
+import InfoModal from '../components/info';
+var Parser = require('expr-eval').Parser;
+var parser = new Parser();
 
 export const DataSource = (schedule, filter, items, data, values, cehck, _this) => {
 
@@ -11,52 +14,88 @@ export const DataSource = (schedule, filter, items, data, values, cehck, _this) 
     ])?.product__company_item_values
     const columns = get(schedule, filter?.type)
     let cellValue = null;
-    const res = map(data, (row) => {
-        let rowName = get(items, row?.item)?.name
-        if (rowName && !row?.deleted_at) {
+    const orderedData = {}
+    let scheduleData = {}
+    const ds = flattenDeep(map(values, d => toArray(d)))
+    console.log("values", ds)
+    map(ds, ((d, key) => {
+        if (d.item) {
+            const item = get(items, d.item)
+            set(scheduleData, `${d.schedule}.${item.order}`, d)
+        }
+    }))
+
+    console.log(scheduleData, "scheduleData")
+    let prev = null;
+    map(data, (d => (set(orderedData, `${d.order}`, d))))
+    let res = map(orderedData, (row) => {
+        let rowItem = get(items, row?.item)
+        if (rowItem?.name && !row?.deleted_at) {
             let columnsData = {}
             map(columns, column => {
+                if (rowItem?.exp) {
+                    parser.functions.val = (d)=>(get(d, 'value', 0))
+                    var expr = parser.parse(rowItem?.exp);
+                    const columnVals = get(scheduleData, column.id)
+                    var calculatedValue = 0
+                    const pre_she = get(schedule, prev)
+                    if(columnVals){
+                        calculatedValue = expr.evaluate({ x: columnVals, o: pre_she || {} })
+                    }
+                }
                 cellValue = get(get(values, row?.item), column?.id)
                 if (cellValue) {
                     cellValue = cellValue[0]
                 }
+                // console.log(values, "data klmlkn klneqwdata data");
                 columnsData = {
                     ...columnsData,
-                    [column?.id]: <span _id={cellValue?.id} row_id={row?.item} column_id={column?.id} edit={true}>{cellValue?.value}</span>
+                    [column?.id]: <span _id={cellValue?.id} row_id={row?.item} column_id={column?.id}
+                        edit={rowItem?.calculated ? false : true}>
+                        {rowItem?.calculated ?
+                            calculatedValue
+                            : cellValue?.value
+                        }
+                    </span>
                 }
+                prev = column.id;
             })
             const menu = (
                 <Menu>
                     <Menu.Item>
-                        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                            info
-                        </a>
+                        <InfoModal item={rowItem} />
                     </Menu.Item>
                     <Menu.Item>
-                        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                            add nickname
-                        </a>
+                        <span
+                            onClick={() => { _this.handelShowModal("nickname", rowItem, row) }}
+                        >
+                            set nickname
+                        </span>
                     </Menu.Item>
-                    <Menu.Item>
-                        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                            remove item
-                        </a>
-                    </Menu.Item>
+                    {!rowItem?.calculated && (
+                        <Menu.Item>
+                            <span
+                                onClick={() => { _this.handelShowModal("remove", rowItem, row) }}
+                            >
+                                remove item
+                            </span>
+                        </Menu.Item>
+                    )}
                 </Menu>
             );
             return {
-                item: <div row_id={row?.item} className="d-flex align-items-center">
+                item: <div row_id={row?.item} className={rowItem?.calculated && Styles.calculatedItem}>
                     <Dropdown overlay={menu} placement="bottomLeft" arrow className="m-2">
                         <Button><span> <i class="fas fa-cog"></i> </span></Button>
                     </Dropdown>
-                    {rowName}</div>,
+                    {row?.nickName ? row?.nickName : rowItem?.name}
+                </div>,
                 ...columnsData
             }
         }
     })
     let checkData = {}
     map(columns, column => {
-        // if (!(column?.filtered==1)) {
         checkData = {
             ...checkData,
             [column?.id]: <div column_id={column?.id} edit={"check"} className={Styles.checkContainer}>
@@ -68,8 +107,8 @@ export const DataSource = (schedule, filter, items, data, values, cehck, _this) 
                 }
             </div>
         }
-        // }
     })
+    res = without(res, undefined)
     return [
         ...res,
         {

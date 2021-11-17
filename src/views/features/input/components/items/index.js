@@ -4,7 +4,7 @@ import Styles from "../../style.module.css";
 
 export default function ItemsBar({ companyItems, items, categories, handelToggleItem }) {
     const [show, setShow] = useState(size(companyItems) > 0 ? false : true)
-    const categoryGroup = groupBy(items, function (b) { return b?.category?.$id })
+    const categoryGroup = groupBy(items, function (b) { return b?.category })
     return (
         <div>
             <button className="btn btn-success m-1"
@@ -24,6 +24,7 @@ export default function ItemsBar({ companyItems, items, categories, handelToggle
                 </div>
                 <div className={Styles.contentItems}>
                     {map(categoryGroup, (groupItem, key) => {
+                        console.log(categoryGroup,"categoryGroup")
                         return <div>
                             <div className={Styles.groupItems}>{get(categories, key)?.name}</div>
                             <div className="d-flex align-items-center justify-content-center flex-wrap ">
