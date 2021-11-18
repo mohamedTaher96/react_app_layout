@@ -50,7 +50,7 @@ class Company extends Component {
               {map(companies, (company, key) => {
                 return (
                   <div key={key} className="col-lg-4 col-sm-6 mb-4">
-                    <Link to={`/company/${company?.id}`}>
+                    <Link to={`/dashboard/company/${company?.id}`}>
                       <div className={Styles.divSty}>
                         <img src={company?.profile ? company?.profile : img1} alt="company" />
                         <span>{company?.name}</span>

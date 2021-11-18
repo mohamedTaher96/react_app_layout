@@ -26,12 +26,26 @@ class CompanyCats extends Component {
         <div className="container mt-4">
           <div className="row">
             <div className="col-lg-4 col-md-6 mb-4">
-              <Link to={`/company/input/${match?.params?.company}`} className={Styles.divSty}>
+              <Link to={`/dashboard/company/input/${match?.params?.company}`} className={Styles.divSty}>
                 <div className={`${Styles.iconSt}`}>
                   <SVG src={icon1} />
                 </div>
                 <div>
                   <span>Input</span>
+                  <div>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                    diam nonumy eirmod tempor invidunt ut labore et dolore{" "}
+                  </div>
+                </div>
+              </Link>
+            </div>
+            <div className="col-lg-4 col-md-6 mb-4">
+              <Link to={`/dashboard/company/view/${match?.params?.company}`} className={Styles.divSty}>
+                <div className={`${Styles.iconSt}`}>
+                  <SVG src={icon1} />
+                </div>
+                <div>
+                  <span>View</span>
                   <div>
                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                     diam nonumy eirmod tempor invidunt ut labore et dolore{" "}

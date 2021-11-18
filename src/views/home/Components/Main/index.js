@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import MainNavbar from "../MainNavbar";
 import Styles from "./style.module.css";
+import {Link} from "react-router-dom";
 
 export default class Main extends Component {
   render() {
@@ -27,9 +28,9 @@ export default class Main extends Component {
                   aliquyam erat, sed diam voluptua.
                 </span>
                 <div className="d-flex">
-                  <button className={`${Styles.firstBtn} btn`}>
+                  <Link to="/dashboard" className={`${Styles.firstBtn} btn`}>
                     Get Started Now
-                  </button>
+                  </Link>
                   <button className={`${Styles.SecBtn} btn`}>
                     <i className="fas fa-play"></i> &nbsp;Watch Demo
                   </button>

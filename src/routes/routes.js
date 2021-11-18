@@ -5,26 +5,32 @@ import AuthInfo from "../views/auth/info.js";
 import Company from "../views/Company";
 import Dashboard from "../views/dashboard";
 import CompanyInput from "../views/features/input";
+import CompanyView from "../views/features/view";
 
 export const MainRoutes = [
-  {
-    path: "/",
-    component: Company,
-    exact: true,
-  },
+
   {
     path: "/company/input/:company",
     component: CompanyInput,
   },
   {
+    path: "/company/view/:company",
+    component: CompanyView,
+  },
+  {
     path: "/company/:company",
     component: Dashboard,
   },
+  {
+    path: "/",
+    component: Company,
+    exact: true,
+  }
 ];
 
 export const AuthMainRoutes = [
   {
-    path: "/login/info",
+    path: "/signin/info",
     component: AuthInfo,
   },
 ];
@@ -33,14 +39,17 @@ export const AuthRoutes = [
   {
     path: "/signup",
     component: SignUp,
-    exact: true,
   },
   {
     path: "/signin",
     component: SignIn,
   },
-  {
-    path: "/home",
-    component: Home,
-  },
+
 ];
+export const WebsiteRoutes = [
+  {
+    path: "/",
+    component: Home,
+    exact: true,
+  },
+]

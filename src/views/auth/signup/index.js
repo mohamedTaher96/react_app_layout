@@ -35,7 +35,7 @@ class SignUp extends Component {
                 <h4 className={Styles.headTxt}>Sign Up</h4>
                 <div className={Styles.secTxt}>
                   <span>Already Have An Account?</span>&nbsp;
-                  <Link to="/login">Log in</Link>
+                  <Link to="/dashboard/signin">Log in</Link>
                 </div>
               </div>
               <Formik

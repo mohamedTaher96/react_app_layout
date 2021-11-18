@@ -25,7 +25,7 @@ export default class Navbar extends Component {
           className={`${Styles.navMar} navbar navbar-expand-md navbar-light bg-white`}
         >
           <div className="container">
-            <Link to="/" className="navbar-brand">
+            <Link to="/dashboard" className="navbar-brand">
               <img src={logo} alt="img1" className={Styles.logoSt} />
             </Link>
             <button

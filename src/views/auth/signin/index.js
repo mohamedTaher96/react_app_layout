@@ -34,7 +34,7 @@ class SignIn extends Component {
                 <h4 className={Styles.headTxt}>Log In</h4>
                 <div className={Styles.secTxt}>
                   <span>Don't have an account?</span>&nbsp;
-                  <Link to="/signup">Sign up</Link>
+                  <Link to="/dashboard/signup">Sign up</Link>
                 </div>
               </div>
               <Formik
@@ -60,9 +60,9 @@ class SignIn extends Component {
                           settings__schedule: {}
                         }
                         Request.sendRequest("multi_query/", fetchData)
-                        .then(fetchRes => {
-                          const schedule = {}
-                          map(fetchRes?.data?.settings__schedule, (d=>(set(schedule, `${d.type}.${d.id}`, d))))
+                          .then(fetchRes => {
+                            const schedule = {}
+                            map(fetchRes?.data?.settings__schedule, (d => (set(schedule, `${d.type}.${d.id}`, d))))
                             _setVal("SETVALUE", {
                               user: res?.data?.user,
                               schedule: schedule,
